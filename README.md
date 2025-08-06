@@ -43,3 +43,30 @@ cd client
 npm install
 npm run start
 Frontend runs at http://localhost:3000
+
+User Schema
+{
+  name: String,
+  email: String,
+  password: String, // hashed
+  role: { type: String, enum: ['uploader', 'signer'] }
+}
+
+
+Document Schema
+
+{
+  title: String,
+  s3Key: String,
+  s3Url: String,
+  assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  signatureFields: [{ page, x, y, width, height, type }],
+  status: { type: String, enum: ['Pending', 'Signed', 'Verified', 'Rejected'], default: 'Pending' },
+  signedFields: {
+    signature: String,
+    name: String,
+    email: String,
+    date: Date
+  }
+}
