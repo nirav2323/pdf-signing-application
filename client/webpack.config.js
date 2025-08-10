@@ -5,7 +5,7 @@ module.exports = {
   mode: 'development',
   entry: './src/index.js', // main entry point
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
     publicPath: '/', // for react-router
   },

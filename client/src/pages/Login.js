@@ -35,9 +35,7 @@ const Login = () => {
   return (
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h2>Welcome Back</h2>
-        {error && <div className="alert error">{error}</div>}
-
+        <h2>Login</h2>
         <div className="input-group">
           <input
             type="email"
@@ -62,7 +60,7 @@ const Login = () => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
-
+        {error && <div className="alert error">{error}</div>}
         <button type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Login'}
         </button>

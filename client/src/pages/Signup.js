@@ -27,7 +27,7 @@ const Register = () => {
     if (result.meta.requestStatus === 'fulfilled') {
       navigate('/login');
     }else{
-      setError(err.response?.data?.message || 'Signup failed');
+      setError(result.payload.msg || 'Signup failed');
     }
     setLoading(false);
   };
@@ -36,8 +36,6 @@ const Register = () => {
     <div className="auth-container">
       <form className="auth-form" onSubmit={handleSubmit}>
         <h2>Create Account</h2>
-        {error && <div className="alert error">{error}</div>}
-
         <div className="input-group">
           <input
             type="text"
@@ -81,7 +79,7 @@ const Register = () => {
           </select>
           <label className="select-label">Role</label>
         </div>
-
+        {error && <div className="alert error">{error}</div>}
         <button type="submit" disabled={loading}>
           {loading ? 'Signing up...' : 'Signup'}
         </button>

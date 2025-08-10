@@ -5,12 +5,15 @@ export const verifyToken = createAsyncThunk('auth/verify', async (_, thunkAPI) =
   try {
     const token = localStorage.getItem('token');
     if (!token) return thunkAPI.rejectWithValue('No token');
-
     const res = await axios.get('/auth/verify', {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data.user;
   } catch (err) {
+    if(err.response.status === 401){
+      localStorage.removeItem('token');
+      location.reload();
+    }
     return thunkAPI.rejectWithValue(err.response?.data?.message || 'Auth failed');
   }
 });
