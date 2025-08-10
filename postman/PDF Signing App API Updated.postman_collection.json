@@ -1,0 +1,319 @@
+{
+	"info": {
+		"_postman_id": "c8a75c84-d123-46a8-af0d-4fdb1f5e96b7",
+		"name": "PDF Signing App API Updated",
+		"description": "Postman collection for PDF Signing Application APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47351995"
+	},
+	"item": [
+		{
+			"name": "Auth - Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"role\": \"uploader\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/signup",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/auth/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - Verify Token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/auth/verify",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"auth",
+						"verify"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "File - Upload PDF",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"value": "",
+							"type": "file"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/files/upload",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"files",
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signer - Sign Document",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"signatureImage\": \"data:image/png;base64,iVBORw0...\",\n  \"name\": \"John Doe\",\n  \"signedUrl\": \"https://s3.amazonaws.com/bucket/signed-file.pdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/sign/sign",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sign",
+						"sign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signer - Get Assigned Documents",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/sign/signer",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"sign",
+						"signer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Uploader - Assign Document",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"signerEmail\": \"signer@example.com\",\n  \"title\": \"Contract 2025\",\n  \"signatureFields\": \"[{ \\\"page\\\": 1, \\\"x\\\": 100, \\\"y\\\": 150 }]\",\n  \"originalUrl\": \"https://s3.amazonaws.com/bucket/original.pdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/upload/assign",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"upload",
+						"assign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Uploader - Update Document Status",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"documentId\": \"{{documentId}}\",\n  \"status\": \"Rejected\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/upload/status",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"upload",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Uploader - Get Uploaded Documents",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/upload/uploader",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"upload",
+						"uploader"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Uploader - Get All Signer",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/upload/uploader",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"upload",
+						"uploader"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
