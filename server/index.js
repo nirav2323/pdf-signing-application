@@ -13,7 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/upload', require('./routes/uploaderRoutes'));
 app.use('/api/user', require('./routes/userRoutes'));
@@ -24,14 +23,14 @@ app.use('/api/files', require('./routes/fileRoutes'));
 app.use(errorHandler);
 
 
-if (process.env.NODE_ENV === 'production') {
+// if (process.env.NODE_ENV === 'production') {
   const buildPath = path.join(__dirname, 'build');
   app.use(express.static(buildPath));
 
-  app.get('/:catchAll(*)', (req, res) => {
+  app.get('/', (req, res) => {
     res.sendFile(path.join(buildPath, 'index.html'));
   });
-}
+// }
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
