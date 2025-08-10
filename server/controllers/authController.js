@@ -5,9 +5,12 @@ const jwt = require('jsonwebtoken');
 exports.signup = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
+    if (!['uploader','signer'].includes(role)) return res.status(400).json({ message: 'Invalid role' });
+    const existing = await User.findOne({ email });
+    if (existing) return res.status(400).json({ message: 'Email already registered' });
     const hashed = await bcrypt.hash(password, 10);
     const user = await User.create({ name, email, password: hashed, role });
-    res.json(user);
+    res.status(201).json({ message: 'User registered successfully',user:user });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -22,8 +25,7 @@ exports.login = async (req, res) => {
   const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: '1d',
   });
-
-  res.json({ token, user: { name: user.name, email: user.email, role: user.role } });
+  res.json({ message: 'User Login successfully',token, user: user });
 };
 
 exports.verifyToken = async (req, res) => {
