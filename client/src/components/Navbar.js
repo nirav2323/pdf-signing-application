@@ -26,8 +26,12 @@ const Navbar = () => {
           :
           <Link to="/login">Dashboard</Link>
         }
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
+        {!user &&
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+          </>
+        }
       </div>
       <div className="navbar-right">
         {user && (

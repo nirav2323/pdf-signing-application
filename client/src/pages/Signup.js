@@ -18,7 +18,10 @@ const Register = () => {
   const navigate = useNavigate();
 
   const togglePassword = () => setShowPassword(!showPassword);
-
+  const user = useSelector((state) => state.auth.user);
+  if(user){
+    navigate('/');
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');

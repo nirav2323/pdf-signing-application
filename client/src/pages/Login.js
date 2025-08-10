@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
@@ -13,7 +13,10 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const togglePassword = () => setShowPassword(!showPassword);
-
+  const user = useSelector((state) => state.auth.user);
+  if(user){
+    navigate('/');
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
