@@ -23,14 +23,15 @@ app.use('/api/files', require('./routes/fileRoutes'));
 app.use(errorHandler);
 
 
-// if (process.env.NODE_ENV === 'production') {
-  const buildPath = path.join(__dirname, 'build');
-  app.use(express.static(buildPath));
 
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(buildPath, 'index.html'));
-  });
-// }
+// Serve static files from the React app build folder
+const buildPath = path.join(__dirname, 'build');
+app.use(express.static(buildPath));
+
+// Catch-all handler to serve React's index.html for any other route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
+});
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
